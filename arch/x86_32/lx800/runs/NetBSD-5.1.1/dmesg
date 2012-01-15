@@ -1,0 +1,102 @@
+Copyright (c) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
+    2006, 2007, 2008, 2009, 2010, 2011, 2012
+    The NetBSD Foundation, Inc.  All rights reserved.
+Copyright (c) 1982, 1986, 1989, 1991, 1993
+    The Regents of the University of California.  All rights reserved.
+
+NetBSD 5.1.1 (GENERIC) #0: Wed Jan  4 23:11:44 UTC 2012
+	builds@b6.netbsd.org:/home/builds/ab/netbsd-5-1-1-RELEASE/i386/201201040549Z-obj/home/builds/ab/netbsd-5-1-1-RELEASE/src/sys/arch/i386/compile/GENERIC
+total memory = 255 MB
+avail memory = 239 MB
+timecounter: Timecounters tick every 10.000 msec
+timecounter: Timecounter "i8254" frequency 1193182 Hz quality 100
+Generic PC
+mainbus0 (root)
+ACPI Error (tbxfroot-0308): A valid RSDP was not found [20080321]
+ACPI: unable to initialize ACPI tables: AE_NOT_FOUND
+cpu0 at mainbus0: AMD 586-class, 433MHz, id 0x5a2
+pci0 at mainbus0 bus 0: configuration mode 1
+pci0: i/o space, memory space enabled, rd/line, rd/mult, wr/inv ok
+pchb0 at pci0 dev 1 function 0
+pchb0: vendor 0x1022 product 0x2080 (rev. 0x33)
+glxsb0 at pci0 dev 1 function 2: RNG AES
+vr0 at pci0 dev 6 function 0: VIA VT6105M (Rhine III) 10/100 Ethernet
+vr0: interrupting at irq 11
+vr0: Ethernet address: 00:00:24:cb:f4:90
+ukphy0 at vr0 phy 1: Generic IEEE 802.3u media interface
+ukphy0: OUI 0x0002c6, model 0x0034, rev. 3
+ukphy0: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, auto
+vr1 at pci0 dev 7 function 0: VIA VT6105M (Rhine III) 10/100 Ethernet
+vr1: interrupting at irq 5
+vr1: Ethernet address: 00:00:24:cb:f4:91
+ukphy1 at vr1 phy 1: Generic IEEE 802.3u media interface
+ukphy1: OUI 0x0002c6, model 0x0034, rev. 3
+ukphy1: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, auto
+vr2 at pci0 dev 8 function 0: VIA VT6105M (Rhine III) 10/100 Ethernet
+vr2: interrupting at irq 9
+vr2: Ethernet address: 00:00:24:cb:f4:92
+ukphy2 at vr2 phy 1: Generic IEEE 802.3u media interface
+ukphy2: OUI 0x0002c6, model 0x0034, rev. 3
+ukphy2: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, auto
+vr3 at pci0 dev 9 function 0: VIA VT6105M (Rhine III) 10/100 Ethernet
+vr3: interrupting at irq 12
+vr3: Ethernet address: 00:00:24:cb:f4:93
+ukphy3 at vr3 phy 1: Generic IEEE 802.3u media interface
+ukphy3: OUI 0x0002c6, model 0x0034, rev. 3
+ukphy3: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, auto
+gcscpcib0 at pci0 dev 20 function 0
+gcscpcib0: vendor 0x1022 product 0x2090 (rev. 0x03)
+timecounter: Timecounter "gcscpcib0" frequency 3579545 Hz quality 1000
+gcscpcib0: Watchdog Timer via MFGPT0, GPIO
+gpio0 at gcscpcib0: 32 pins
+viaide0 at pci0 dev 20 function 2
+viaide0: Advanced Micro Devices CS5536 IDE Controller (rev. 0x01)
+viaide0: bus-master DMA support present
+viaide0: primary channel wired to compatibility mode
+viaide0: primary channel interrupting at irq 14
+atabus0 at viaide0 channel 0
+viaide0: secondary channel wired to compatibility mode
+viaide0: secondary channel ignored (disabled)
+ohci0 at pci0 dev 21 function 0: vendor 0x1022 product 0x2094 (rev. 0x02)
+ohci0: interrupting at irq 15
+ohci0: OHCI version 1.0, legacy support
+usb0 at ohci0: USB revision 1.0
+gcscehci0 at pci0 dev 21 function 1: vendor 0x1022 product 0x2095 (rev. 0x02)
+gcscehci0: interrupting at irq 15
+gcscehci0: EHCI version 1.0
+gcscehci0: companion controller, 4 ports each: ohci0
+usb1 at gcscehci0: USB revision 2.0
+isa0 at gcscpcib0
+com0 at isa0 port 0x3f8-0x3ff irq 4: ns16550a, working fifo
+com0: console
+com1 at isa0 port 0x2f8-0x2ff irq 3: ns16550a, working fifo
+pckbc0 at isa0 port 0x60-0x64
+attimer0 at isa0 port 0x40-0x43: AT Timer
+pcppi0 at isa0 port 0x61
+midi0 at pcppi0: PC speaker (CPU-intensive output)
+sysbeep0 at pcppi0
+isapnp0 at isa0 port 0x279: ISA Plug 'n Play device support
+npx0 at isa0 port 0xf0-0xff
+npx0: reported by CPUID; using exception 16
+attimer0: attached to pcppi0
+isapnp0: no ISA Plug 'n Play devices found
+timecounter: Timecounter "clockinterrupt" frequency 100 Hz quality 0
+uhub0 at usb0: vendor 0x1022 OHCI root hub, class 9/0, rev 1.00/1.00, addr 1
+uhub0: 4 ports with 4 removable, self powered
+uhub1 at usb1: vendor 0x1022 EHCI root hub, class 9/0, rev 2.00/1.00, addr 1
+uhub1: 4 ports with 4 removable, self powered
+wd0 at atabus0 drive 0: <CF 1GB>
+wd0: drive supports 1-sector PIO transfers, LBA addressing
+wd0: 967 MB, 1966 cyl, 16 head, 63 sec, 512 bytes/sect x 1981728 sectors
+wd0: 32-bit data port
+wd0: drive supports PIO mode 4, DMA mode 2
+wd0(viaide0:0:0): using PIO mode 4, DMA mode 2 (using DMA)
+Kernelized RAIDframe activated
+pad0: outputs: 44100Hz, 16-bit, stereo
+audio0 at pad0: half duplex, playback, capture
+boot device: wd0
+root on wd0a dumps on wd0b
+root file system type: ffs
+WARNING: NVRAM century is 19 but RTC year is 2012
+proc: table is full - increase kern.maxproc or NPROC
+proc: table is full - increase kern.maxproc or NPROC
