@@ -201,7 +201,7 @@ plot_one_candlesticks()
 	_title="title \"${_title}\""
 	echo -n "'${_data}' using 1:4:3:7:6 with candlesticks lt ${LT} lw 1 notitle,"
 	echo -n "'${_data}' using 1:5 with point lt ${LT} notitle, "
-     	echo -n "'${_data}' using 1:8 with lines lt ${LT} ${_title}"
+	echo -n "'${_data}' using 1:8 with lines lt ${LT} ${_title}"
 	LT=$((${LT}+1))
 }
 
