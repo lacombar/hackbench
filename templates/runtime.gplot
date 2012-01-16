@@ -1,0 +1,12 @@
+set terminal png size 1000, 400 font ",9"
+set border 3 front linetype -1 linewidth 1.000
+set boxwidth 0.5 absolute
+set style fill solid border -1
+set grid layerdefault   linetype 0 linewidth 1.000,  linetype 0 linewidth 1.000
+set key  right top vertical Left reverse enhanced autotitles columnhead box linetype -1 linewidth 1.000
+set style histogram columnstacked
+set style data histograms
+set xtics border in scale 0.5,0.5
+set style line 1 lc rgb "#eeeeff"
+set style line 2 lc rgb "#bbbbff"
+set style increment user
