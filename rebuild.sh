@@ -607,8 +607,6 @@ if [ -n "${LIST:-}" ]; then
 	exit
 fi
 
-set > set.0
-
 check_directories()
 {
 	for _dir in images data scripts; do
@@ -662,5 +660,3 @@ if [ ${DO_PLOT} = 1 ]; then
 	    for_each_platform \
 	        plot
 fi
-
-set > set.1
