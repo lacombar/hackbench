@@ -74,6 +74,8 @@ IPCS=
 [ ${DO_PIPE} = 1 ] && IPCS="pipe ${IPCS}"
 [ ${DO_SOCKET} = 1 ] && IPCS="socket ${IPCS}"
 
+[ $# = 2 ] || usage
+
 TYPE="$1"
 HACKBENCH="$2"
 shift 2
