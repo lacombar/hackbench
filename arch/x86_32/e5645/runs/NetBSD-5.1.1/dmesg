@@ -1,0 +1,206 @@
+Copyright (c) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
+    2006, 2007, 2008, 2009, 2010, 2011, 2012
+    The NetBSD Foundation, Inc.  All rights reserved.
+Copyright (c) 1982, 1986, 1989, 1991, 1993
+    The Regents of the University of California.  All rights reserved.
+
+NetBSD 5.1.1 (GENERIC) #0: Wed Jan  4 23:11:44 UTC 2012
+	builds@b6.netbsd.org:/home/builds/ab/netbsd-5-1-1-RELEASE/i386/201201040549Z-obj/home/builds/ab/netbsd-5-1-1-RELEASE/src/sys/arch/i386/compile/GENERIC
+total memory = 3063 MB
+avail memory = 2998 MB
+timecounter: Timecounters tick every 10.000 msec
+timecounter: Timecounter "i8254" frequency 1193182 Hz quality 100
+Intel Thurley (To Be Filled By O.E.M.)
+mainbus0 (root)
+cpu0 at mainbus0 apid 0/home/builds/ab/netbsd-5-1-1-RELEASE/src/sys/arch/x86/x86/mtrr_i686.c: FIXME: more than 8 MTRRs
+: Intel 686-class, 2400MHz, id 0x206c2
+cpu1 at mainbus0 apid 2: Intel 686-class, 2400MHz, id 0x206c2
+cpu2 at mainbus0 apid 4: Intel 686-class, 2400MHz, id 0x206c2
+cpu3 at mainbus0 apid 16: Intel 686-class, 2400MHz, id 0x206c2
+cpu4 at mainbus0 apid 18: Intel 686-class, 2400MHz, id 0x206c2
+cpu5 at mainbus0 apid 20: Intel 686-class, 2400MHz, id 0x206c2
+cpu6 at mainbus0 apid 1: Intel 686-class, 2400MHz, id 0x206c2
+cpu7 at mainbus0 apid 3: Intel 686-class, 2400MHz, id 0x206c2
+cpu8 at mainbus0 apid 5: Intel 686-class, 2400MHz, id 0x206c2
+cpu9 at mainbus0 apid 17: Intel 686-class, 2400MHz, id 0x206c2
+cpu10 at mainbus0 apid 19: Intel 686-class, 2400MHz, id 0x206c2
+cpu11 at mainbus0 apid 21: Intel 686-class, 2400MHz, id 0x206c2
+ioapic0 at mainbus0 apid 6: pa 0xfec00000, version 20, 24 pins
+acpi0 at mainbus0: Intel ACPICA 20080321
+acpi0: X/RSDT: OemId <050410,RSDT1353,20100504>, AslId <MSFT,00000097>
+acpi0: SCI interrupting at int 9
+acpi0: fixed-feature power button present
+timecounter: Timecounter "ACPI-Safe" frequency 3579545 Hz quality 900
+ACPI-Safe 24-bit timer
+attimer1 at acpi0 (TMR, PNP0100): io 0x40-0x43 irq 0
+pcppi1 at acpi0 (SPKR, PNP0800): io 0x61
+midi0 at pcppi1: PC speaker (CPU-intensive output)
+sysbeep0 at pcppi1
+npx1 at acpi0 (COPR, PNP0C04): io 0xf0-0xff irq 13
+npx1: reported by CPUID; using exception 16
+UAR1 (PNP0501) at acpi0 not configured
+UAR2 (PNP0501) at acpi0 not configured
+LPTE (PNP0400) at acpi0 not configured
+FWH (INT0800) at acpi0 not configured
+acpibut0 at acpi0 (PWRB, PNP0C0C-170): ACPI Power Button
+apm0 at acpi0: Power Management spec V1.2
+attimer1: attached to pcppi1
+pci0 at mainbus0 bus 0: configuration mode 1
+pci0: i/o space, memory space enabled, rd/line, rd/mult, wr/inv ok
+pchb0 at pci0 dev 0 function 0
+pchb0: vendor 0x8086 product 0x3406 (rev. 0x22)
+ppb0 at pci0 dev 1 function 0: vendor 0x8086 product 0x3408 (rev. 0x22)
+ppb0: unsupported PCI Express version
+pci1 at ppb0 bus 1
+pci1: memory space enabled, rd/line, wr/inv ok
+vendor 0x177d product 0x0010 (network/computing crypto, revision 0x01) at pci1 dev 0 function 0 not configured
+ppb1 at pci0 dev 3 function 0: vendor 0x8086 product 0x340a (rev. 0x22)
+ppb1: unsupported PCI Express version
+pci2 at ppb1 bus 2
+pci2: no spaces enabled!
+ppb2 at pci0 dev 4 function 0: vendor 0x8086 product 0x340b (rev. 0x22)
+ppb2: unsupported PCI Express version
+pci3 at ppb2 bus 3
+pci3: no spaces enabled!
+ppb3 at pci0 dev 5 function 0: vendor 0x8086 product 0x340c (rev. 0x22)
+ppb3: unsupported PCI Express version
+pci4 at ppb3 bus 4
+pci4: i/o space, memory space enabled, rd/line, wr/inv ok
+wm0 at pci4 dev 0 function 0: Intel PRO/1000 PT (82571EB), rev. 6
+wm0: interrupting at ioapic0 pin 16
+wm0: PCI-Express bus
+wm0: 65536 word (16 address bits) SPI EEPROM
+wm0: Ethernet address 00:90:0b:1d:a4:70
+igphy0 at wm0 phy 1: Intel IGP01E1000 Gigabit PHY, rev. 0
+igphy0: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, 1000baseT, 1000baseT-FDX, auto
+wm1 at pci4 dev 0 function 1: Intel PRO/1000 PT (82571EB), rev. 6
+wm1: interrupting at ioapic0 pin 17
+wm1: PCI-Express bus
+wm1: 65536 word (16 address bits) SPI EEPROM
+wm1: Ethernet address 00:90:0b:1d:a4:71
+igphy1 at wm1 phy 1: Intel IGP01E1000 Gigabit PHY, rev. 0
+igphy1: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, 1000baseT, 1000baseT-FDX, auto
+ppb4 at pci0 dev 6 function 0: vendor 0x8086 product 0x340d (rev. 0x22)
+ppb4: unsupported PCI Express version
+pci5 at ppb4 bus 5
+pci5: i/o space, memory space enabled, rd/line, wr/inv ok
+wm2 at pci5 dev 0 function 0: Intel PRO/1000 PT (82571EB), rev. 6
+wm2: interrupting at ioapic0 pin 16
+wm2: PCI-Express bus
+wm2: 65536 word (16 address bits) SPI EEPROM
+wm2: Ethernet address 00:90:0b:1d:a4:72
+igphy2 at wm2 phy 1: Intel IGP01E1000 Gigabit PHY, rev. 0
+igphy2: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, 1000baseT, 1000baseT-FDX, auto
+wm3 at pci5 dev 0 function 1: Intel PRO/1000 PT (82571EB), rev. 6
+wm3: interrupting at ioapic0 pin 17
+wm3: PCI-Express bus
+wm3: 65536 word (16 address bits) SPI EEPROM
+wm3: Ethernet address 00:90:0b:1d:a4:73
+igphy3 at wm3 phy 1: Intel IGP01E1000 Gigabit PHY, rev. 0
+igphy3: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, 1000baseT, 1000baseT-FDX, auto
+ppb5 at pci0 dev 7 function 0: vendor 0x8086 product 0x340e (rev. 0x22)
+ppb5: unsupported PCI Express version
+pci6 at ppb5 bus 6
+pci6: i/o space, memory space enabled, rd/line, wr/inv ok
+vendor 0x8086 product 0x150e (ethernet network, revision 0x01) at pci6 dev 0 function 0 not configured
+vendor 0x8086 product 0x150e (ethernet network, revision 0x01) at pci6 dev 0 function 1 not configured
+ppb6 at pci0 dev 8 function 0: vendor 0x8086 product 0x340f (rev. 0x22)
+ppb6: unsupported PCI Express version
+pci7 at ppb6 bus 7
+pci7: i/o space, memory space enabled, rd/line, wr/inv ok
+vendor 0x8086 product 0x150e (ethernet network, revision 0x01) at pci7 dev 0 function 0 not configured
+vendor 0x8086 product 0x150e (ethernet network, revision 0x01) at pci7 dev 0 function 1 not configured
+ppb7 at pci0 dev 9 function 0: vendor 0x8086 product 0x3410 (rev. 0x22)
+ppb7: unsupported PCI Express version
+pci8 at ppb7 bus 8
+pci8: no spaces enabled!
+ppb8 at pci0 dev 10 function 0: vendor 0x8086 product 0x3411 (rev. 0x22)
+ppb8: unsupported PCI Express version
+pci9 at ppb8 bus 9
+pci9: no spaces enabled!
+vendor 0x8086 product 0x342e (interrupt system, revision 0x22) at pci0 dev 20 function 0 not configured
+vendor 0x8086 product 0x3422 (interrupt system, revision 0x22) at pci0 dev 20 function 1 not configured
+vendor 0x8086 product 0x3423 (interrupt system, revision 0x22) at pci0 dev 20 function 2 not configured
+vendor 0x8086 product 0x3438 (interrupt system, revision 0x22) at pci0 dev 20 function 3 not configured
+ppb9 at pci0 dev 28 function 0: vendor 0x8086 product 0x3a40 (rev. 0x00)
+pci10 at ppb9 bus 12
+pci10: no spaces enabled!
+ppb10 at pci0 dev 28 function 4: vendor 0x8086 product 0x3a48 (rev. 0x00)
+pci11 at ppb10 bus 11
+pci11: i/o space, memory space enabled, rd/line, wr/inv ok
+wm4 at pci11 dev 0 function 0: Intel i82574L, rev. 0
+wm4: interrupting at ioapic0 pin 16
+wm4: PCI-Express bus
+wm4: 256 word (8 address bits) SPI EEPROM
+wm4: Ethernet address 00:90:0b:1d:da:16
+ukphy0 at wm4 phy 1: Generic IEEE 802.3u media interface
+ukphy0: OUI 0x000ac2, model 0x000b, rev. 1
+ukphy0: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, 1000baseT, 1000baseT-FDX, auto
+ppb11 at pci0 dev 28 function 5: vendor 0x8086 product 0x3a4a (rev. 0x00)
+pci12 at ppb11 bus 10
+pci12: i/o space, memory space enabled, rd/line, wr/inv ok
+vga1 at pci12 dev 0 function 0: vendor 0x18ca product 0x0027 (rev. 0x00)
+wsdisplay0 at vga1 kbdmux 1
+wsmux1: connecting to wsdisplay0
+drm at vga1 not configured
+uhci0 at pci0 dev 29 function 0: vendor 0x8086 product 0x3a34 (rev. 0x00)
+uhci0: interrupting at ioapic0 pin 23
+usb0 at uhci0: USB revision 1.0
+uhci1 at pci0 dev 29 function 1: vendor 0x8086 product 0x3a35 (rev. 0x00)
+uhci1: interrupting at ioapic0 pin 19
+usb1 at uhci1: USB revision 1.0
+ehci0 at pci0 dev 29 function 7: vendor 0x8086 product 0x3a3a (rev. 0x00)
+ehci0: interrupting at ioapic0 pin 23
+ehci0: EHCI version 1.0
+ehci0: companion controllers, 2 ports each: uhci0 uhci1
+usb2 at ehci0: USB revision 2.0
+ppb12 at pci0 dev 30 function 0: vendor 0x8086 product 0x244e (rev. 0x90)
+pci13 at ppb12 bus 13
+pci13: no spaces enabled!
+pcib0 at pci0 dev 31 function 0
+pcib0: vendor 0x8086 product 0x3a16 (rev. 0x00)
+piixide0 at pci0 dev 31 function 2
+piixide0: Intel ICH10 Serial ATA 2 Controller 4x2 (rev. 0x00)
+piixide0: bus-master DMA support present
+piixide0: primary channel configured to native-PCI mode
+piixide0: using ioapic0 pin 19 for native-PCI interrupt
+atabus0 at piixide0 channel 0
+piixide0: secondary channel configured to native-PCI mode
+atabus1 at piixide0 channel 1
+ichsmb0 at pci0 dev 31 function 3: vendor 0x8086 product 0x3a30 (rev. 0x00)
+ichsmb0: interrupting at ioapic0 pin 18
+iic0 at ichsmb0: I2C bus
+isa0 at pcib0
+lpt0 at isa0 port 0x378-0x37b irq 7
+com0 at isa0 port 0x3f8-0x3ff irq 4: ns16550a, working fifo
+com0: console
+com1 at isa0 port 0x2f8-0x2ff irq 3: ns16550a, working fifo
+pckbc0 at isa0 port 0x60-0x64
+timecounter: Timecounter "clockinterrupt" frequency 100 Hz quality 0
+uhub0 at usb0: vendor 0x8086 UHCI root hub, class 9/0, rev 1.00/1.00, addr 1
+uhub0: 2 ports with 2 removable, self powered
+uhub1 at usb1: vendor 0x8086 UHCI root hub, class 9/0, rev 1.00/1.00, addr 1
+uhub1: 2 ports with 2 removable, self powered
+uhub2 at usb2: vendor 0x8086 EHCI root hub, class 9/0, rev 2.00/1.00, addr 1
+uhub2: 4 ports with 4 removable, self powered
+wd0 at atabus1 drive 0: <ST91000640NS>
+wd0: drive supports 16-sector PIO transfers, LBA48 addressing
+wd0: 931 GB, 1938021 cyl, 16 head, 63 sec, 512 bytes/sect x 1953525168 sectors
+wd0: 32-bit data port
+wd0: drive supports PIO mode 4, DMA mode 2, Ultra-DMA mode 6 (Ultra/133)
+wd1 at atabus1 drive 1: <CF 1GB>
+wd1: drive supports 1-sector PIO transfers, LBA addressing
+wd1: 967 MB, 1966 cyl, 16 head, 63 sec, 512 bytes/sect x 1981728 sectors
+wd1: 32-bit data port
+wd1: drive supports PIO mode 4, DMA mode 2
+wd0(piixide0:1:0): using PIO mode 4, Ultra-DMA mode 6 (Ultra/133) (using DMA)
+wd1(piixide0:1:1): using PIO mode 4, DMA mode 2 (using DMA)
+Kernelized RAIDframe activated
+pad0: outputs: 44100Hz, 16-bit, stereo
+audio0 at pad0: half duplex, playback, capture
+boot device: wd1
+root on wd1a dumps on wd1b
+root file system type: ffs
+proc: table is full - increase kern.maxproc or NPROC
+file: table is full - increase kern.maxfiles or MAXFILES
+proc: table is full - increase kern.maxproc or NPROC
