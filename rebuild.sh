@@ -368,25 +368,6 @@ generate_run_scripts()
 	local _script
 	local _mode
 
-	# generate ...
-	list_results | while read _result; do
-		_data="data/data/${_result}"
-		_script="scripts/${_result##*/}.gplot"
-		_image="images/${_result##*/}.png"
-
-		cat <<EOF > "${_script}"
-set terminal png size 800, 300
-set ylabel "time (s)"
-set xlabel "ngroup"
-set boxwidth 1.5 absolute
-set output '${_image}'
-plot \\
-EOF
-		plot_one_candlesticks "${_data}" "" >> "${_script}"
-		LT=1
-	done
-
-
 	list_results | \
 	    sed 's/.*\.//' | \
 	    sort -u | \
