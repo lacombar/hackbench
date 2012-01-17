@@ -7,6 +7,23 @@ die()
 	exit 1
 }
 
+usage()
+{
+	cat <<EOF
+$0 [-f] [-p|-t] [-P|-S] [-n <name>] [-m <max-sample>] TYPE BINARY
+    TYPE	One of <light|medium|heavy>
+    BINARY	Test binary
+    -f		Overwrite existing results
+    -p		Run only in \`process' mode
+    -t		Run only in \'thread' mode
+    -P		Only run with \`pipe'
+    -S		Only run with \`socket'
+    -n <name>	Name (default: \`uname -sr')
+    -m <max>	Number of sample to take for each iteration (default: 10)
+EOF
+	exit 1
+}
+
 # modes
 DO_PROCESS=1
 DO_THREAD=1
