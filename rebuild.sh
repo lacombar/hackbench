@@ -317,7 +317,7 @@ set noytics
 set notitle
 set origin 0.65,0.5
 set size 0.35,0.5
-set label 1 "variance"
+set label 1 "variance" at 0,-150
 plot '${_data}' using 1:2:9 with image notitle
 set origin 0.65,0.0
 set size 0.35,0.5
