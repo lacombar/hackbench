@@ -299,6 +299,7 @@ generate_one_run_map()
 	local _data="$3"
 	local _max_ngroup="$4"
 	local _max_nloop="$5"
+	local _title="$6"
 
 	cat <<EOF > "${_script}"
 set xrange [0:${_max_ngroup}]
@@ -306,7 +307,7 @@ set yrange [0:${_max_nloop}]
 set terminal png size 800, 300
 set output '${_image}'
 set palette rgbformulae -3,-3,-7
-set title ""
+set title "${_title}"
 set multiplot
 set origin 0,0
 set size 0.7,1
@@ -342,12 +343,13 @@ generate_run_map()
 
 	_script="scripts/${_ipc}-${_mode}.gplot"
 	_image="images/${_ipc}-${_mode}.png"
+	_title="${RUN} (${_ipc} / ${_mode})"
 
 	_max_ngroup="$(tail -1 "${_data}" | awk '{print $1}')"
 	_max_nloop="$(tail -1 "${_data}" | awk '{print $2}')"
 
 	generate_one_run_map "${_script}" "${_image}" "${_data}" \
-	    "${_max_ngroup}" "${_max_nloop}"
+	    "${_max_ngroup}" "${_max_nloop}" "${_title}"
 
 	_data="data/${_ipc}-${_mode}-normalized"
 	[ -e "${_data}" ] || return 0
@@ -356,7 +358,7 @@ generate_run_map()
 	_image="images/${_ipc}-${_mode}-normalized.png"
 
 	generate_one_run_map "${_script}" "${_image}" "${_data}" \
-	    "${_max_ngroup}" "${_max_nloop}"
+	    "${_max_ngroup}" "${_max_nloop}" "${_title}"
 
 }
 
