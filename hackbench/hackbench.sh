@@ -190,6 +190,9 @@ run()
 	[ "${IPC}" != "${OIPC:-}" ] && echo " ${IPC}:"
 	echo "  ${MODE}:"
 
+	HACKBENCH_ARGS=
+	[ "${IPC}" = "pipe" ] && HACKBENCH_ARGS="-pipe"
+
 	for _ngroup in ${NGROUPS}; do
 		echo "   ${_ngroup}:"
 		echo "Running in \`${MODE}' mode using ${IPC} with ${_ngroup} groups..." >&2
