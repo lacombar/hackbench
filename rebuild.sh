@@ -28,7 +28,7 @@ _list_runs()
 {
 	local _run
 
-	find "runs" -mindepth 1 -maxdepth 1 | \
+	find "runs" -mindepth 1 -maxdepth 1 -type d | \
 	    sort | \
 	    while read _run; do
 		echo ${_run##*/}
