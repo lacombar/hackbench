@@ -10,3 +10,4 @@ set xtics border in scale 0.5,0.5
 set style line 1 lc rgb "#eeeeff"
 set style line 2 lc rgb "#bbbbff"
 set style increment user
+set grid

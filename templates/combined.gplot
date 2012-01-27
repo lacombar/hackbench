@@ -3,3 +3,4 @@ set ylabel "time (s)"
 set xlabel "ngroup"
 set boxwidth 1.5 absolute
 set key left top vertical Left reverse enhanced
+set grid
