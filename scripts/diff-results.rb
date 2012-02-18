@@ -16,19 +16,44 @@
 @basedir = ARGV[0]
 @targetdir = ARGV[1]
 
-[ "process", "thread" ].each { |type|
-	base_fname = "#{@basedir}/data/#{type}"
-	target_fname = "#{@targetdir}/data/#{type}"
+def do_diff(ipc, mode)
+	base_fname = "#{@basedir}/data/#{ipc}-#{mode}"
+	target_fname = "#{@targetdir}/data/#{ipc}-#{mode}"
 
 	base = File.open(base_fname)
 	target = File.open(target_fname)
 
-	output_fname = "#{@targetdir}/data/#{type}-normalized"
+	output_fname = "#{@targetdir}/data/#{ipc}-#{mode}-normalized"
 	output = File.open(output_fname, "w")
 
 	base.each_line { |line|
 		tline = target.gets
-		output.write "#{line.split[0]} #{line.split[1]} %.3f\n" % (tline.split[7].to_f / line.split[7].to_f)
+		
+		avg_runtime = (tline.split[7].to_f / line.split[7].to_f) - 1
+		avg_runtime = 0.0 if avg_runtime.nan? or avg_runtime.infinite?
+
+		variance = (tline.split[8].to_f / line.split[8].to_f) - 1
+		variance = 0.0 if variance.nan? or variance.infinite?
+
+		stddev = (tline.split[9].to_f / line.split[9].to_f) - 1
+		stddev = 0.0 if stddev.nan? or stddev.infinite?
+
+		output.write "#{line.split[0]} #{line.split[1]} %.3f %.3f %.3f\n" %
+		    [ avg_runtime, variance, stddev ]
 	}
-}
+end
+
+def do_mode(ipc)
+	[ "process", "thread" ].each { |mode|
+		do_diff(ipc, mode)
+	}
+end
+
+def do_ipc()
+	[ "pipe", "socket" ].each { |ipc|
+		do_mode(ipc)
+	}
+end
+
+do_ipc()
 

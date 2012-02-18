@@ -327,6 +327,42 @@ set nomultiplot
 EOF
 }
 
+generate_one_normalized_run_map()
+{
+	local _script="$1"
+	local _image="$2"
+	local _data="$3"
+	local _max_ngroup="$4"
+	local _max_nloop="$5"
+	local _title="$6"
+
+	cat <<EOF > "${_script}"
+set xrange [0:${_max_ngroup}]
+set yrange [0:${_max_nloop}]
+set terminal png size 800, 300
+set output '${_image}'
+set palette defined (-1 "#00bb00", -0.5 "#00bb00", 0 "#ffffff", 0.5 "#bb0000", 1 "#bb0000")
+set cbrange [-1:1]
+set title "${_title}"
+set multiplot
+set origin 0,0
+set size 0.7,1
+plot '${_data}' using 1:2:3 with image notitle
+set noxtics
+set noytics
+set notitle
+set origin 0.65,0.5
+set size 0.35,0.5
+set label 1 "variance" at 0,-150
+plot '${_data}' using 1:2:4 with image notitle
+set origin 0.65,0.0
+set size 0.35,0.5
+set label 1 "stddev"
+plot '${_data}' using 1:2:5 with image notitle
+set nomultiplot
+EOF
+}
+
 generate_run_map()
 {
 	local _ipc=$1; shift;
@@ -357,7 +393,7 @@ generate_run_map()
 	_script="scripts/${_ipc}-${_mode}-normalized.gplot"
 	_image="images/${_ipc}-${_mode}-normalized.png"
 
-	generate_one_run_map "${_script}" "${_image}" "${_data}" \
+	generate_one_normalized_run_map "${_script}" "${_image}" "${_data}" \
 	    "${_max_ngroup}" "${_max_nloop}" "${_title}"
 
 }
