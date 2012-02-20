@@ -31,7 +31,7 @@ _list_runs()
 	find "runs" -mindepth 1 -maxdepth 1 -type d | \
 	    sort | \
 	    while read _run; do
-		echo ${_run##*/}
+		[ -f "${_run}/results.yml" ] && echo ${_run##*/}
 	done
 }
 
