@@ -634,49 +634,55 @@ check_directories()
 	done
 }
 
-for_each_arch \
-    for_each_platform \
-        for_each_run \
-            check_directories
-
-for_each_arch \
-    for_each_platform \
-        check_directories
-
-if [ ${DO_GENERATE} = 1 ]; then
-	echo "* Generating results ..."
+main()
+{
 	for_each_arch \
 	    for_each_platform \
 	        for_each_run \
-	            generate_run_results
-
-	echo "* Generating scripts ..."
+	            check_directories
 
 	for_each_arch \
 	    for_each_platform \
-	        for_each_run \
-	            generate_run_scripts
+	        check_directories
 
-	for_each_arch \
-	    for_each_platform \
-	        for_each_ipc \
-	            generate_runtime_results
+	if [ ${DO_GENERATE} = 1 ]; then
+		echo "* Generating results ..."
+		for_each_arch \
+		    for_each_platform \
+		        for_each_run \
+		            generate_run_results
 
-	for_each_arch \
-	    for_each_platform \
-	        for_each_ipc \
-	            generate_combined_results
-fi
+		echo "* Generating scripts ..."
 
-if [ ${DO_PLOT} = 1 ]; then
-	echo "* Plotting ..."
+		for_each_arch \
+		    for_each_platform \
+		        for_each_run \
+		            generate_run_scripts
 
-	for_each_arch \
-	    for_each_platform \
-	        for_each_run \
-	            plot
+		for_each_arch \
+		    for_each_platform \
+		        for_each_ipc \
+		            generate_runtime_results
 
-	for_each_arch \
-	    for_each_platform \
-	        plot
-fi
+		for_each_arch \
+		    for_each_platform \
+		        for_each_ipc \
+		            generate_combined_results
+	fi
+
+	if [ ${DO_PLOT} = 1 ]; then
+		echo "* Plotting ..."
+
+		for_each_arch \
+		    for_each_platform \
+		        for_each_run \
+		            plot
+
+		for_each_arch \
+		    for_each_platform \
+		        plot
+	fi
+}
+
+main
+
