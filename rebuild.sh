@@ -83,7 +83,7 @@ _list_platforms()
 	    sort | \
 	    while read _platform; do
 		echo ${_platform##*/}
-	done
+	    done
 }
 
 list_platforms()
