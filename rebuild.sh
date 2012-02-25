@@ -82,7 +82,8 @@ _list_platforms()
 	find "." -maxdepth 1 -mindepth 1 -type d | \
 	    sort | \
 	    while read _platform; do
-		echo ${_platform##*/}
+		_platform=${_platform##*/}
+		[ -d "${_platform}/runs" ] && echo ${_platform}
 	    done
 }
 
