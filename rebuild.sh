@@ -57,7 +57,6 @@ for_each_run()
 {
 	local _cb=$1; shift
 	local _cwd=$(pwd)
-	local _runs=$(list_runs)
 
 	list_runs | while read _run; do
 		RUN=${_run}
@@ -407,11 +406,6 @@ list_results()
 
 generate_run_scripts()
 {
-	local _image
-	local _data
-	local _result
-	local _script
-	local _mode
 
 	list_results | \
 	    sed 's/.*\.//' | \
