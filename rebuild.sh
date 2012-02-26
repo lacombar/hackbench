@@ -24,6 +24,13 @@ die()
 	exit 1
 }
 
+_mkdir()
+{
+	local _directory="$1"
+
+	[ -d "${_directory}" ] || mkdir "${_directory}"
+}
+
 _list_runs()
 {
 	local _run
@@ -621,7 +628,7 @@ fi
 check_directories()
 {
 	for _dir in images data scripts; do
-		[ -d "${_dir}" ] || mkdir "${_dir}"
+		_mkdir "${_dir}"
 	done
 }
 
