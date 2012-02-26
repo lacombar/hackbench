@@ -46,15 +46,6 @@ list_runs()
 	_list_runs "$@"
 }
 
-list_results()
-{
-	local _result
-
-	find "data" -name '*.*' | while read _result; do
-		echo ${_result##*/}
-	done
-}
-
 for_each_run()
 {
 	local _cb=$1; shift
@@ -397,6 +388,15 @@ generate_run_map()
 	generate_one_normalized_run_map "${_script}" "${_image}" "${_data}" \
 	    "${_max_ngroup}" "${_max_nloop}" "${_title}"
 
+}
+
+list_results()
+{
+	local _result
+
+	find "data" -name '*.*' | while read _result; do
+		echo ${_result##*/}
+	done
 }
 
 generate_run_scripts()
