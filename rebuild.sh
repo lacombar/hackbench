@@ -630,7 +630,7 @@ fi
 check_directories()
 {
 	for _dir in images data scripts; do
-		[ -e "${_dir}" ] || mkdir "${_dir}"
+		[ -d "${_dir}" ] || mkdir "${_dir}"
 	done
 }
 
