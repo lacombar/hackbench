@@ -92,6 +92,7 @@ list_platforms()
 for_each_platform()
 {
 	local _cb=$1; shift
+	local _cwd=$(pwd)
 	local _platform
 
 	list_platforms | while read _platform; do
@@ -99,8 +100,6 @@ for_each_platform()
 		    die "${_platform}: no such directory"
 
 		PLATFORM=${_platform}
-
-		local _cwd=$(pwd)
 
 		cd "${_platform}";
 		${_cb} "$@"
@@ -144,9 +143,9 @@ for_each_arch()
 		[ -d "${_arch}" ] || \
 		    die "${_platform}: no such directory"
 
-		ARCH=${_arch}
-
 		local _cwd=$(pwd)
+
+		ARCH=${_arch}
 
 		cd "${_arch}";
 		${_cb} "$@"
