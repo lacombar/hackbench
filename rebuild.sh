@@ -633,16 +633,25 @@ check_directories()
 	done
 }
 
-main()
+build_destdir()
 {
 	for_each_arch \
-	    for_each_platform \
-	        for_each_run \
-	            check_directories
+	    check_directories
 
 	for_each_arch \
 	    for_each_platform \
 	        check_directories
+
+	for_each_arch \
+	    for_each_platform \
+	        for_each_run \
+	            check_directories
+}
+
+main()
+{
+
+	build_destdir
 
 	if [ ${DO_GENERATE} = 1 ]; then
 		echo "* Generating results ..."
