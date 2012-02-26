@@ -560,8 +560,6 @@ COMBINED_RESULTS_TEMPLATE="$(pwd)/templates/combined-results.gplot"
 RUNTIME_RESULTS_TEMPLATE="$(pwd)/templates/runtime.gplot"
 TEMPLATES_DIR="$(pwd)/templates"
 
-DO_GENERATE=1
-DO_PLOT=1
 
 do_list_platforms()
 {
@@ -599,14 +597,8 @@ do
 	A)
 		ARCHS_OVERRIDE="$(echo ${OPTARG} | sed 's/,/ /g')"
 		;;
-	g)
-		DO_PLOT=0
-		;;
 	l)
 		LIST=${OPTARG}
-		;;
-	p)
-		DO_GENERATE=0
 		;;
 	P)
 		PLATFORMS_OVERRIDE="$(echo ${OPTARG} | sed 's/,/ /g')"
@@ -648,49 +640,83 @@ build_destdir()
 	            check_directories
 }
 
+generate_results()
+{
+	echo "* Generating results ..."
+	for_each_arch \
+	    for_each_platform \
+	        for_each_run \
+	            generate_run_results
+}
+
+generate_scripts()
+{
+	echo "* Generating scripts ..."
+
+	for_each_arch \
+	    for_each_platform \
+	        for_each_run \
+	            generate_run_scripts
+
+	for_each_arch \
+	    for_each_platform \
+	        for_each_ipc \
+	            generate_runtime_results
+
+	for_each_arch \
+	    for_each_platform \
+	        for_each_ipc \
+	            generate_combined_results
+}
+
+generate_plots()
+{
+	echo "* Generating plots ..."
+
+	for_each_arch \
+	    for_each_platform \
+	        for_each_run \
+	            plot
+
+	for_each_arch \
+	    for_each_platform \
+	        plot
+}
+
 main()
 {
+	local _do_results=1
+	local _do_scripts=1
+	local _do_plots=1
 
 	build_destdir
 
-	if [ ${DO_GENERATE} = 1 ]; then
-		echo "* Generating results ..."
-		for_each_arch \
-		    for_each_platform \
-		        for_each_run \
-		            generate_run_results
+	while [ $# != 0 ]; do
+		_do_results=
+		_do_scripts=
+		_do_plots=
 
-		echo "* Generating scripts ..."
+		case "$1" in
+		"results")
+			_do_results=1
+			;;
+		"scripts")
+			_do_scripts=1
+			;;
+		"plots")
+			_do_plots=1
+			;;
+		esac
 
-		for_each_arch \
-		    for_each_platform \
-		        for_each_run \
-		            generate_run_scripts
+		shift
+	done
 
-		for_each_arch \
-		    for_each_platform \
-		        for_each_ipc \
-		            generate_runtime_results
+	[ -z "${_do_results}" ] || generate_results
 
-		for_each_arch \
-		    for_each_platform \
-		        for_each_ipc \
-		            generate_combined_results
-	fi
+	[ -z "${_do_scripts}" ] || generate_scripts
 
-	if [ ${DO_PLOT} = 1 ]; then
-		echo "* Plotting ..."
-
-		for_each_arch \
-		    for_each_platform \
-		        for_each_run \
-		            plot
-
-		for_each_arch \
-		    for_each_platform \
-		        plot
-	fi
+	[ -z "${_do_plots}" ] || generate_plots
 }
 
-main
+main "$@"
 
