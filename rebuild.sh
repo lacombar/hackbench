@@ -158,7 +158,7 @@ for_each_arch()
 
 	list_arch | while read _arch; do
 		[ -d "${_arch}" ] || \
-		    die "${_platform}: no such directory"
+		    die "${_arch}: no such directory"
 
 		local _cwd=$(pwd)
 
