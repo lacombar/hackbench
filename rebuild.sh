@@ -33,9 +33,15 @@ _mkdir()
 
 _list_runs()
 {
+	local _cwd=$(pwd)
+	local _ppwd
 	local _run
 
-	find "runs" -mindepth 1 -maxdepth 1 -type d | \
+	_ppwd=${_cwd%/*}
+	_ppwd=${_ppwd%/*}
+	[ "${_ppwd##*/}" = "arch" ] || die
+
+	find "." -mindepth 1 -maxdepth 1 -type d | \
 	    sort | \
 	    while read _run; do
 		[ -f "${_run}/results.yml" ] && echo ${_run##*/}
@@ -62,7 +68,7 @@ for_each_run()
 	list_runs | while read _run; do
 		RUN=${_run}
 
-		cd "runs/${_run}"
+		cd "${_run}"
 		${_cb} "$@"
 		cd "${_cwd}"
 
@@ -83,7 +89,7 @@ _list_platforms()
 	    sort | \
 	    while read _platform; do
 		_platform=${_platform##*/}
-		[ -d "${_platform}/runs" ] && echo ${_platform}
+		echo ${_platform}
 	    done
 }
 
@@ -206,8 +212,11 @@ find_template()
 
 generate_run_results()
 {
+	local _destdir="$(get_destdir)"
 
-	${RESULTS_SCRIPT_INTERPRETER} ${RESULTS_SCRIPT_INTERPRETER_ARGS} \
+	O=${_destdir} \
+	${RESULTS_SCRIPT_INTERPRETER} \
+	    ${RESULTS_SCRIPT_INTERPRETER_ARGS} \
 	    ${RESULTS_SCRIPT} .
 }
 
@@ -228,20 +237,21 @@ generate_run_script_by_ipc()
 {
 	local _nloop="$1"; shift
 	local _ipc="$1"
+	local _destdir="$(get_destdir)"
 	local _process_data
 	local _thread_data
 	local _image
 	local _script
 
-	_process_data="data/${_ipc}-process.${_nloop}"
-	_thread_data="data/${_ipc}-thread.${_nloop}"
+	_process_data="${_destdir}/data/${_ipc}-process.${_nloop}"
+	_thread_data="${_destdir}/data/${_ipc}-thread.${_nloop}"
 
 	[ -e "${_process_data}" -a -e "${_thread_data}" ] || \
 	    return 0
 
 	# generate ...
-	_script="scripts/${_ipc}.${_nloop}.gplot"
-	_image="images/${_ipc}.${_nloop}.png"
+	_script="${_destdir}/scripts/${_ipc}.${_nloop}.gplot"
+	_image="${_destdir}/images/${_ipc}.${_nloop}.png"
 
 	cat <<EOF > "${_script}"
 set terminal png size 800, 300
@@ -264,20 +274,21 @@ generate_run_script_by_mode()
 {
 	local _nloop="$1"; shift
 	local _mode="$1"
+	local _destdir="$(get_destdir)"
 	local _pipe_data
 	local _socket_data
 	local _image
 	local _script
 
-	_pipe_data="data/pipe-${_mode}.${_nloop}"
-	_socket_data="data/socket-${_mode}.${_nloop}"
+	_pipe_data="${_destdir}/data/pipe-${_mode}.${_nloop}"
+	_socket_data="${_destdir}/data/socket-${_mode}.${_nloop}"
 
 	[ -e "${_pipe_data}" -a -e "${_socket_data}" ] || \
 	    return 0
 
 	# generate ...
-	_script="scripts/${_mode}.${_nloop}.gplot"
-	_image="images/${_mode}.${_nloop}.png"
+	_script="${_destdir}/scripts/${_mode}.${_nloop}.gplot"
+	_image="${_destdir}/images/${_mode}.${_nloop}.png"
 
 	cat <<EOF > "${_script}"
 set terminal png size 800, 300
@@ -371,6 +382,7 @@ generate_run_map()
 {
 	local _ipc=$1; shift;
 	local _mode=$1; shift;
+	local _destdir="$(get_destdir)"
 	local _max_ngroup
 	local _max_nloop
 	local _data
@@ -378,11 +390,11 @@ generate_run_map()
 	local _script
 	local _normalized_script
 
-	_data="data/${_ipc}-${_mode}"
+	_data="${_destdir}/data/${_ipc}-${_mode}"
 	[ -e "${_data}" ] || return 0
 
-	_script="scripts/${_ipc}-${_mode}.gplot"
-	_image="images/${_ipc}-${_mode}.png"
+	_script="${_destdir}/scripts/${_ipc}-${_mode}.gplot"
+	_image="${_destdir}/images/${_ipc}-${_mode}.png"
 	_title="${RUN} (${_ipc} / ${_mode})"
 
 	_max_ngroup="$(tail -1 "${_data}" | awk '{print $1}')"
@@ -391,11 +403,11 @@ generate_run_map()
 	generate_one_run_map "${_script}" "${_image}" "${_data}" \
 	    "${_max_ngroup}" "${_max_nloop}" "${_title}"
 
-	_data="data/${_ipc}-${_mode}-normalized"
+	_data="${_destdir}/data/${_ipc}-${_mode}-normalized"
 	[ -e "${_data}" ] || return 0
 
-	_script="scripts/${_ipc}-${_mode}-normalized.gplot"
-	_image="images/${_ipc}-${_mode}-normalized.png"
+	_script="${_destdir}/scripts/${_ipc}-${_mode}-normalized.gplot"
+	_image="${_destdir}/images/${_ipc}-${_mode}-normalized.png"
 
 	generate_one_normalized_run_map "${_script}" "${_image}" "${_data}" \
 	    "${_max_ngroup}" "${_max_nloop}" "${_title}"
@@ -404,9 +416,10 @@ generate_run_map()
 
 list_results()
 {
+	local _destdir="$(get_destdir)"
 	local _result
 
-	find "data" -name '*.*' | while read _result; do
+	find "${_destdir}/data" -name '*.*' | while read _result; do
 		echo ${_result##*/}
 	done
 }
@@ -470,9 +483,10 @@ compute_run_time()
 {
 	local _ipc="$1"
 	local _mode="$2"
+	local _destdir="$(get_destdir)"
 	local _data
 
-	_data="data/${_ipc}-${_mode}"
+	_data="${_destdir}/data/${_ipc}-${_mode}"
 
 	runtime=0
 	[ -e "${_data}" ] && runtime=$(sum_runtime "${_data}")
@@ -487,14 +501,15 @@ output_runtime_header()
 generate_runtime_results()
 {
 	local _ipc="$1"
+	local _destdir="$(get_destdir)"
 	local _data
 	local _script
 	local _image
 	local _run
 
-	_data="data/${_ipc}-runtime"
-	_script="scripts/runtime-${_ipc}.gplot"
-	_image="images/runtime-${_ipc}.png"
+	_data="${_destdir}/data/${_ipc}-runtime"
+	_script="${_destdir}/scripts/runtime-${_ipc}.gplot"
+	_image="${_destdir}/images/runtime-${_ipc}.png"
 
 	{
 		echo -n "_ "
@@ -523,10 +538,10 @@ generate_runtime_results()
 
 generate_combined_run_result()
 {
-	local _pwd=$(pwd)
+	local _destdir="$(get_destdir)"
 	local _data
 
-	_data="${_pwd}/data/$1"
+	_data="${_destdir}/data/$1"
 
 	[ -e "${_data}" ] || return 0
 
@@ -537,6 +552,7 @@ generate_combined_run_result()
 generate_combined_results()
 {
 	local _ipc="$1"
+	local _destdir="$(get_destdir)"
 	local _loop_data
 
 	for_each_run list_results | \
@@ -545,8 +561,8 @@ generate_combined_results()
 		local _image
 		local _script
 
-		_image="images/combined-${_loop_data}.png";
-		_script="scripts/combined-${_loop_data}.gplot"		
+		_image="${_destdir}/images/combined-${_loop_data}.png";
+		_script="${_destdir}/scripts/combined-${_loop_data}.gplot"
 
 		{
 			echo "set output '${_image}'"
@@ -562,9 +578,10 @@ generate_combined_results()
 
 plot()
 {
+	local _destdir="$(get_destdir)"
 	local _script
 
-	for _script in scripts/*.gplot; do
+	for _script in ${_destdir}/scripts/*.gplot; do
 		local _template
 		_template=$(find_template "${_script}")
 		gnuplot ${_template} ${_script}
@@ -580,6 +597,7 @@ COMBINED_RESULTS_TEMPLATE="$(pwd)/templates/combined-results.gplot"
 RUNTIME_RESULTS_TEMPLATE="$(pwd)/templates/runtime.gplot"
 TEMPLATES_DIR="$(pwd)/templates"
 
+DESTDIR=$(pwd)/results
 
 do_list_platforms()
 {
@@ -638,11 +656,24 @@ if [ -n "${LIST:-}" ]; then
 	exit
 fi
 
-check_directories()
+get_destdir()
 {
+	echo "${DESTDIR}/${ARCH}/${PLATFORM}/${RUN}"
+}
+
+build_destdir_directories()
+{
+	local _ocwd=$(pwd)
+	local _destdir="$(get_destdir)"
+
+	_mkdir "${_destdir}"
+	cd "${_destdir}"
+
 	for _dir in images data scripts; do
 		_mkdir "${_dir}"
 	done
+
+	cd ${_ocwd}
 }
 
 ARCH=
@@ -651,17 +682,20 @@ RUN=
 
 build_destdir()
 {
+
+	_mkdir "${DESTDIR}"
+
 	for_each_arch \
-	    check_directories
+	    build_destdir_directories
 
 	for_each_arch \
 	    for_each_platform \
-	        check_directories
+	        build_destdir_directories
 
 	for_each_arch \
 	    for_each_platform \
 	        for_each_run \
-	            check_directories
+	            build_destdir_directories
 }
 
 generate_results()

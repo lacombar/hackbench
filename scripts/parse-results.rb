@@ -20,7 +20,7 @@ def parse_results(results)
 	results.keys.each { |ipc|
 		modes=results[ipc]
 		modes.keys.sort.each { |mode|
-			output_name = "#{@basedir}/data/#{ipc}-#{mode}"
+			output_name = "#{@outdir}/data/#{ipc}-#{mode}"
 			output = File.open(output_name, "w")
 
 			nloop_output_mode = "w"
@@ -51,6 +51,11 @@ end
 @basedir = ARGV[0]
 if @basedir.nil?
 	@basedir = "."
+end
+
+@outdir = ENV['O']
+if @outdir.nil?
+	@outdir = "."
 end
 
 @data = YAML.load(File.open("#{@basedir}/results.yml")).to_hash
