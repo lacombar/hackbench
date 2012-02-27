@@ -39,7 +39,7 @@ _list_runs()
 
 	_ppwd=${_cwd%/*}
 	_ppwd=${_ppwd%/*}
-	[ "${_ppwd##*/}" = "arch" ] || die
+	[ "${_ppwd##*/}" = "arch" ] || die "_list_runs"
 
 	find "." -mindepth 1 -maxdepth 1 -type d | \
 	    sort | \
@@ -83,7 +83,7 @@ _list_platforms()
 	local _platform
 
 	_pwd=${_cwd%/*}
-	[ "${_pwd##*/}" = "arch" ] || die
+	[ "${_pwd##*/}" = "arch" ] || die "_list_platforms"
 
 	find "." -maxdepth 1 -mindepth 1 -type d | \
 	    sort | \
@@ -129,7 +129,7 @@ _list_arch()
 	local _cwd=$(pwd)
 	local _arch
 
-	[ "${_cwd##*/}" = "arch" ] || die
+	[ "${_cwd##*/}" = "arch" ] || die "_list_arch"
 
 	find "." -maxdepth 1 -mindepth 1 -type d | \
 	    sort | \
