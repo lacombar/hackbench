@@ -470,7 +470,9 @@ compute_run_time()
 {
 	local _ipc="$1"
 	local _mode="$2"
-	local _data="data/${_ipc}-${_mode}"
+	local _data
+
+	_data="data/${_ipc}-${_mode}"
 
 	runtime=0
 	[ -e "${_data}" ] && runtime=$(sum_runtime "${_data}")
@@ -485,10 +487,14 @@ output_runtime_header()
 generate_runtime_results()
 {
 	local _ipc="$1"
-	local _data="data/${_ipc}-runtime"
-	local _script="scripts/runtime-${_ipc}.gplot"
-	local _image="images/runtime-${_ipc}.png"
+	local _data
+	local _script
+	local _image
 	local _run
+
+	_data="data/${_ipc}-runtime"
+	_script="scripts/runtime-${_ipc}.gplot"
+	_image="images/runtime-${_ipc}.png"
 
 	{
 		echo -n "_ "
@@ -518,7 +524,9 @@ generate_runtime_results()
 generate_combined_run_result()
 {
 	local _pwd=$(pwd)
-	local _data="${_pwd}/data/$1"
+	local _data
+
+	_data="${_pwd}/data/$1"
 
 	[ -e "${_data}" ] || return 0
 
@@ -534,8 +542,11 @@ generate_combined_results()
 	for_each_run list_results | \
 	    sort -u |
 	    while read _loop_data; do
-		local _image="images/combined-${_loop_data}.png"
-		local _script="scripts/combined-${_loop_data}.gplot"
+		local _image
+		local _script
+
+		_image="images/combined-${_loop_data}.png";
+		_script="scripts/combined-${_loop_data}.gplot"		
 
 		{
 			echo "set output '${_image}'"
@@ -554,7 +565,8 @@ plot()
 	local _script
 
 	for _script in scripts/*.gplot; do
-		local _template=$(find_template "${_script}")
+		local _template
+		_template=$(find_template "${_script}")
 		gnuplot ${_template} ${_script}
 	done
 
