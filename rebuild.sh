@@ -612,9 +612,13 @@ do_list_platforms()
 
 do_list_runs()
 {
+	local _run
 
 	echo " * ${ARCH} - ${PLATFORM}"
-	list_runs
+	list_runs | \
+	    while read _run; do
+		echo "  - ${_run}"
+	    done
 }
 
 list()
