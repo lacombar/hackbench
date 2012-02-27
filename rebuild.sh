@@ -57,6 +57,7 @@ for_each_run()
 {
 	local _cb=$1; shift
 	local _cwd=$(pwd)
+	local _run
 
 	list_runs | while read _run; do
 		RUN=${_run}
@@ -64,6 +65,8 @@ for_each_run()
 		cd "runs/${_run}"
 		${_cb} "$@"
 		cd "${_cwd}"
+
+		RUN=
 	done
 }
 
@@ -110,6 +113,8 @@ for_each_platform()
 		cd "${_platform}";
 		${_cb} "$@"
 		cd "${_cwd}"
+
+		PLATFORM=
 	done
 }
 
@@ -156,6 +161,8 @@ for_each_arch()
 		cd "${_arch}";
 		${_cb} "$@"
 		cd "${_cwd}"
+
+		ARCH=
 	done
 
 	cd ..
@@ -625,6 +632,10 @@ check_directories()
 		_mkdir "${_dir}"
 	done
 }
+
+ARCH=
+PLATFORM=
+RUN=
 
 build_destdir()
 {
