@@ -616,7 +616,10 @@ list()
 {
 	case $1 in
 	"arch")
+		local _ocwd=$(pwd)
+		cd "arch"
 		list_arch
+		cd "${_ocwd}"
 		;;
 	"platforms")
 		for_each_arch \
