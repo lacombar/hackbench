@@ -240,7 +240,7 @@ generate_run_script_by_ipc()
 	local _destdir="$(get_destdir)"
 	local _process_data
 	local _thread_data
-	local _image
+	local _plot
 	local _script
 
 	_process_data="${_destdir}/data/${_ipc}-process.${_nloop}"
@@ -251,7 +251,7 @@ generate_run_script_by_ipc()
 
 	# generate ...
 	_script="${_destdir}/scripts/${_ipc}.${_nloop}.gplot"
-	_image="${_destdir}/images/${_ipc}.${_nloop}.png"
+	_plot="${_destdir}/plots/${_ipc}.${_nloop}.png"
 
 	cat <<EOF > "${_script}"
 set terminal png size 800, 300
@@ -259,7 +259,7 @@ set ylabel "time (s)"
 set xlabel "ngroup"
 set boxwidth 1.5 absolute
 set key left top vertical Left reverse enhanced
-set output '${_image}'
+set output '${_plot}'
 plot \\
 EOF
 	{
@@ -277,7 +277,7 @@ generate_run_script_by_mode()
 	local _destdir="$(get_destdir)"
 	local _pipe_data
 	local _socket_data
-	local _image
+	local _plot
 	local _script
 
 	_pipe_data="${_destdir}/data/pipe-${_mode}.${_nloop}"
@@ -288,7 +288,7 @@ generate_run_script_by_mode()
 
 	# generate ...
 	_script="${_destdir}/scripts/${_mode}.${_nloop}.gplot"
-	_image="${_destdir}/images/${_mode}.${_nloop}.png"
+	_plot="${_destdir}/plots/${_mode}.${_nloop}.png"
 
 	cat <<EOF > "${_script}"
 set terminal png size 800, 300
@@ -296,7 +296,7 @@ set ylabel "time (s)"
 set xlabel "ngroup"
 set boxwidth 1.5 absolute
 set key left top vertical Left reverse enhanced
-set output '${_image}'
+set output '${_plot}'
 plot \\
 EOF
 	{
@@ -310,7 +310,7 @@ EOF
 generate_one_run_map()
 {
 	local _script="$1"
-	local _image="$2"
+	local _plot="$2"
 	local _data="$3"
 	local _max_ngroup="$4"
 	local _max_nloop="$5"
@@ -320,7 +320,7 @@ generate_one_run_map()
 set xrange [0:${_max_ngroup}]
 set yrange [0:${_max_nloop}]
 set terminal png size 800, 300
-set output '${_image}'
+set output '${_plot}'
 set palette rgbformulae -3,-3,-7
 set title "${_title}"
 set multiplot
@@ -345,7 +345,7 @@ EOF
 generate_one_normalized_run_map()
 {
 	local _script="$1"
-	local _image="$2"
+	local _plot="$2"
 	local _data="$3"
 	local _max_ngroup="$4"
 	local _max_nloop="$5"
@@ -355,7 +355,7 @@ generate_one_normalized_run_map()
 set xrange [0:${_max_ngroup}]
 set yrange [0:${_max_nloop}]
 set terminal png size 800, 300
-set output '${_image}'
+set output '${_plot}'
 set palette defined (-1 "#00bb00", -0.5 "#00bb00", 0 "#ffffff", 0.5 "#bb0000", 1 "#bb0000")
 set cbrange [-1:1]
 set title "${_title}"
@@ -386,7 +386,7 @@ generate_run_map()
 	local _max_ngroup
 	local _max_nloop
 	local _data
-	local _image
+	local _plot
 	local _script
 	local _normalized_script
 
@@ -394,22 +394,22 @@ generate_run_map()
 	[ -e "${_data}" ] || return 0
 
 	_script="${_destdir}/scripts/${_ipc}-${_mode}.gplot"
-	_image="${_destdir}/images/${_ipc}-${_mode}.png"
+	_plot="${_destdir}/plots/${_ipc}-${_mode}.png"
 	_title="${RUN} (${_ipc} / ${_mode})"
 
 	_max_ngroup="$(tail -1 "${_data}" | awk '{print $1}')"
 	_max_nloop="$(tail -1 "${_data}" | awk '{print $2}')"
 
-	generate_one_run_map "${_script}" "${_image}" "${_data}" \
+	generate_one_run_map "${_script}" "${_plot}" "${_data}" \
 	    "${_max_ngroup}" "${_max_nloop}" "${_title}"
 
 	_data="${_destdir}/data/${_ipc}-${_mode}-normalized"
 	[ -e "${_data}" ] || return 0
 
 	_script="${_destdir}/scripts/${_ipc}-${_mode}-normalized.gplot"
-	_image="${_destdir}/images/${_ipc}-${_mode}-normalized.png"
+	_plot="${_destdir}/plots/${_ipc}-${_mode}-normalized.png"
 
-	generate_one_normalized_run_map "${_script}" "${_image}" "${_data}" \
+	generate_one_normalized_run_map "${_script}" "${_plot}" "${_data}" \
 	    "${_max_ngroup}" "${_max_nloop}" "${_title}"
 
 }
@@ -504,12 +504,12 @@ generate_runtime_results()
 	local _destdir="$(get_destdir)"
 	local _data
 	local _script
-	local _image
+	local _plot
 	local _run
 
 	_data="${_destdir}/data/${_ipc}-runtime"
 	_script="${_destdir}/scripts/runtime-${_ipc}.gplot"
-	_image="${_destdir}/images/runtime-${_ipc}.png"
+	_plot="${_destdir}/plots/runtime-${_ipc}.png"
 
 	{
 		echo -n "_ "
@@ -525,7 +525,7 @@ generate_runtime_results()
 	{
 		ncol=$(head -1 "${_data}" | wc -w)
 		i=2
-		echo "set output '${_image}'"
+		echo "set output '${_plot}'"
 		echo "plot \\"
 		while [ $i -lt $ncol ]; do
 			echo "    '${_data}' using $i ti col, \\"; i=$(($i+1))
@@ -558,14 +558,14 @@ generate_combined_results()
 	for_each_run list_results | \
 	    sort -u |
 	    while read _loop_data; do
-		local _image
+		local _plot
 		local _script
 
-		_image="${_destdir}/images/combined-${_loop_data}.png";
+		_plot="${_destdir}/plots/combined-${_loop_data}.png";
 		_script="${_destdir}/scripts/combined-${_loop_data}.gplot"
 
 		{
-			echo "set output '${_image}'"
+			echo "set output '${_plot}'"
 			echo "plot \\"
 		} > "${_script}"
 
@@ -669,7 +669,7 @@ build_destdir_directories()
 	_mkdir "${_destdir}"
 	cd "${_destdir}"
 
-	for _dir in images data scripts; do
+	for _dir in plots data scripts; do
 		_mkdir "${_dir}"
 	done
 
