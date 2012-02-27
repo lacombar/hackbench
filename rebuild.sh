@@ -601,8 +601,13 @@ DESTDIR=$(pwd)/results
 
 do_list_platforms()
 {
+	local _platform
+
 	echo " * ${ARCH}"
-	list_platforms
+	list_platforms | \
+	    while read _platform; do
+		echo "  - ${_platform}"
+	    done
 }
 
 do_list_runs()
