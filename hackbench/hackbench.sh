@@ -218,4 +218,8 @@ RUN_BEGINNING=$(date +%s)
 
 RUN_END=$(date +%s)
 
+dmesg > dmesg
+
+[ -e /proc/config.gz ] && cp /proc/config.gz .
+
 echo "* Run \`${TYPE}' completed in $((${RUN_END}-${RUN_BEGINNING}))s."
