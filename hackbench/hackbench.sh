@@ -207,9 +207,15 @@ run()
 	OIPC="${IPC}"
 }
 
+RUN_BEGINNING=$(date +%s)
+
 {
 	echo "results:"
 	for_each_ipc \
 	    for_each_mode \
 	        run
 } > results.yml
+
+RUN_END=$(date +%s)
+
+echo "* Run \`${TYPE}' completed in $((${RUN_END}-${RUN_BEGINNING}))s."
